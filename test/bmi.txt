@@ -1,0 +1,55 @@
+
+
+MAN ---------------------------------------------------------
+
+- BMI (weight, height)
+
+    < 19    = skeleton
+    19 - 22 = twink
+    22 - 27 = brah
+    > 27    = overweight
+
+- Weight
+
+    > 200   = FULL
+
+- Height
+
+    < 150     = dwarf
+    150 - 165 = half man
+    165 - 175 = manlet
+    175 - 180 = almost man
+    180 - 185 = standard man
+    185 - 200 = tall man
+    > 200     = emperor
+
+- Shoulder to waist ratio
+
+    < 1.5     = weak
+    1.5 - 1.7 = warrior
+    > 1.7     = leader
+
+
+WOMAN ---------------------------------------------------------
+
+- BMI (weight, height)
+
+- Weight
+
+- Height
+
+    < 150     = little goblin
+    150 - 165 = demon
+    165 - 178 = hot
+    178 - 190 = amazon
+    > 190     = female titan, maybe man
+
+- Hip to waist ratio
+
+    < 1.25     = pig
+    1.25 - 1.5 = healthy
+    > 1.5      = busty lady
+
+
+
+

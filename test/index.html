@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@brahsupps" />
+    <meta name="twitter:title" content="BRAH TEST" />
+    <meta name="twitter:description" content="TEST SELF WHAT TYPE BRAH YOU ARE" />
+    <meta name="twitter:image" content="https://brahsupps.com/test/imgres/ws/brucelee.webp" />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="BRAH TEST" />
+    <meta property="og:description" content="TEST SELF WHAT TYPE BRAH YOU ARE" />
+    <meta property="og:url" content="https://brahsupps.com/test" />
+    <meta property="og:image" content="https://brahsupps.com/test/imgres/ws/brucelee.webp" />
+
+    <title>BRAH TEST</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/res/favicon/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/res/favicon/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/res/favicon/favicon-16x16.png" />
+    <link rel="manifest" href="/res/favicon/site.webmanifest" />
+    <link rel="mask-icon" href="/res/favicon/safari-pinned-tab.svg" color="#ff0000" />
+    <meta name="msapplication-TileColor" content="#b91d47" />
+    <meta name="theme-color" content="#ffffff" />
+
+    <link href="./test.css" rel="stylesheet" type="text/css" media="all" />
+  </head>
+
+  <body>
+    <div class="header" id="header">
+      <h1>BRAH TEST</h1>
+    </div>
+
+    <div class="columns">
+      <div class="column one">
+        <form id="measurementForm">
+          <div class="field">
+            <label for="gender">性别 Sex:</label>
+            <select id="gender" name="gender" required>
+              <option value="male">先生 Gentleman</option>
+              <option value="female" disabled>小姐 Lady (COMING SOON)</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="race">树种 Race:</label>
+            <select id="race" name="race" required>
+              <option value="western">外国人 Westerner</option>
+              <option value="chinese" disabled>中国人 Chinese (COMING SOON)</option>
+              <option value="african" disabled>黑人 Africa Person (COMING SOON)</option>
+              <option value="indian" disabled>印度鬼子 India (COMING SOON)</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <fieldset>
+              <legend>测量系统 Measure system</legend>
+              <div>
+                <input type="radio" id="metric" name="measure" value="metric" checked />
+                <label for="metric">公制 Metric (kg, cm)</label>
+              </div>
+              <div>
+                <input type="radio" id="imperial" name="measure" value="imperial" />
+                <label for="imperial">英制 Imperial (lb, in)</label>
+              </div>
+            </fieldset>
+          </div>
+
+          <div class="field">
+            <label for="weight">体重 Weight (<span class="wt"></span>):</label>
+            <input type="number" id="weight" name="weight" min="0" required />
+          </div>
+
+          <div class="field">
+            <label for="height">身高 Height (<span class="ln"></span>):</label>
+            <input type="number" id="height" name="height" min="0" required />
+          </div>
+
+          <div id="maleFields">
+            <div class="field">
+              <label for="bench">卧推 Bench press (<span class="wt"></span>):</label>
+              <input type="number" id="bench" name="bench" min="0" required />
+            </div>
+
+            <div class="field">
+              <label for="penis">阴茎长度 Penis size (<span class="ln"></span>):</label>
+              <input type="number" id="penis" name="penis" min="0" />
+            </div>
+
+            <!-- <div class="field">
+            <label for="shoulder">肩围 Shoulder circumference (<span class="ln"></span>):</label>
+            <input type="number" id="shoulder" name="shoulder" min="0" />
+          </div> -->
+          </div>
+
+          <div id="femaleFields">
+            <div class="field">
+              <label for="cup">胸罩尺寸 Breast cup size:</label>
+              <input type="text" id="cup" name="cup" placeholder="A, B, C, etc" />
+            </div>
+
+            <!-- <div class="field">
+            <label for="hip">臀围 Hip circumference (<span class="ln"></span>):</label>
+            <input type="number" id="hip" name="hip" min="0" />
+          </div> -->
+          </div>
+
+          <!-- <div class="field">
+          <label for="waist">腰围 Waist circumference (<span class="ln"></span>):</label>
+          <input type="number" id="waist" name="waist" min="0" />
+        </div> -->
+
+          <input type="submit" value="BECAME MEASURING" />
+        </form>
+      </div>
+
+      <div class="column two">
+        <div id="alert">
+          <img src="alert.webp" />
+          <br />
+          <div id="you-are"></div>
+          <br />
+          <button id="understand" onclick="closeAlert()">I'm understand please continue</button>
+        </div>
+
+        <div id="good">
+          <h2>Test results is completion:</h2>
+          <div id="good-image"></div>
+          <div id="good-title"></div>
+          <div id="good-metric"></div>
+          <div id="good-text"></div>
+        </div>
+
+        <div class="result" id="result"></div>
+      </div>
+
+      <div class="column three">
+        <div id="recommendations">
+          <div style="font-style: italic">
+            request of order <a href="https://twitter.com/brahsupps" target="_blank" rel="noopener">CONTACT</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <audio class="audio" id="audio-alert" src="./alert.mp3"></audio>
+    <audio class="audio" id="audio-warning" src="./warning.mp3"></audio>
+    <audio class="audio" id="audio-you-are-fat-person" src="./you-are-fat-person.mp3"></audio>
+    <audio class="audio" id="audio-you-are-weak-pussy" src="./you-are-weak-pussy.mp3"></audio>
+
+    <script src="./images.js"></script>
+    <script src="./conv.js"></script>
+    <script src="./all.js"></script>
+
+    <script>
+      init();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,11 @@
+.assets {
+}
+
+.assets .list {
+}
+
+.assets .list img,
+.assets .list video {
+  height: 300px;
+  max-height: 300px;
+}

@@ -1,0 +1,24 @@
+.cooking {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.cooking .ingredients {
+  margin: 32px 0;
+}
+
+.cooking h4,
+.cooking p,
+.cooking ul {
+  font-style: italic;
+  text-align: center;
+}
+
+.cooking .instruction {
+  font-weight: bold;
+}
+
+.cooking img {
+  width: 100%;
+  margin: 8px 0;
+}
