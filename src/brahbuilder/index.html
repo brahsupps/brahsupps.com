@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>BRAH BUILDER</title>
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@brahsupps" />
+    <meta name="twitter:title" content="BRAH BUILDER" />
+    <meta name="twitter:description" content="BUILD YOUR OWN BRAH" />
+    <meta name="twitter:image" content="https://brahsupps.com/brahbuilder/brah.png" />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="BRAH BUILDER" />
+    <meta property="og:description" content="BUILD YOUR OWN BRAH" />
+    <meta property="og:url" content="https://brahsupps.com" />
+    <meta property="og:image" content="https://brahsupps.com/brahbuilder/brah.png" />
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/res/favicon/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/res/favicon/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/res/favicon/favicon-16x16.png" />
+    <link rel="manifest" href="/res/favicon/site.webmanifest" />
+    <link rel="mask-icon" href="/res/favicon/safari-pinned-tab.svg" color="#ff0000" />
+    <meta name="msapplication-TileColor" content="#b91d47" />
+    <meta name="theme-color" content="#ffffff" />
+
+    <style>
+      @font-face {
+        font-family: "PublicPixel";
+        src: url(./PublicPixel.ttf) format("truetype");
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: PublicPixel, "Courier New", Courier, monospace;
+        text-align: center;
+        margin: 0;
+        background: black;
+        color: white;
+        user-select: none;
+      }
+
+      #imgs {
+        position: relative;
+        /* background: white; */
+        margin: 32px auto 0;
+        border: 4px inset gold;
+        width: 408px;
+        height: 408px;
+      }
+      #imgs img {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      .selectors {
+        margin: 0 auto;
+        padding: 16px 0;
+      }
+      .selector {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: center;
+        align-items: center;
+      }
+      .layername {
+        width: 280px;
+        font-size: 20px;
+      }
+      .arrow {
+        font-size: 36px;
+        cursor: pointer;
+        color: red;
+        transform: translateY(-4px);
+      }
+      .arrow:hover {
+        color: white;
+      }
+
+      .randomize,
+      .download {
+        padding: 8px 0;
+      }
+      .randomize span,
+      .download span {
+        color: red;
+        cursor: pointer;
+      }
+      .randomize span:hover,
+      .download span:hover {
+        font-size: 36;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>BRAH BUILDER</h1>
+    <h2>BUILD YOUR OWN BRAH</h2>
+
+    <canvas id="canvas" style="display: none"></canvas>
+
+    <div id="imgs">
+      <img src="checkered.png" style="opacity: 0.2" />
+      <img id="LBackground" />
+      <img id="LBrah" />
+      <img id="LShades" />
+      <img id="LHat" />
+      <img id="LLogo" />
+    </div>
+
+    <div class="selectors">
+      <div class="selector">
+        <div class="arrow" onclick="move('LBackground', -1)">◀</div>
+        <div class="layername">BACKGROUND</div>
+        <div class="arrow" onclick="move('LBackground', +1)">▶</div>
+      </div>
+
+      <div class="selector">
+        <div class="arrow" onclick="move('LBrah', -1)">◀</div>
+        <div class="layername">BRAH</div>
+        <div class="arrow" onclick="move('LBrah', +1)">▶</div>
+      </div>
+
+      <div class="selector">
+        <div class="arrow" onclick="move('LShades', -1)">◀</div>
+        <div class="layername">SHADES</div>
+        <div class="arrow" onclick="move('LShades', +1)">▶</div>
+      </div>
+
+      <div class="selector">
+        <div class="arrow" onclick="move('LHat', -1)">◀</div>
+        <div class="layername">HAT</div>
+        <div class="arrow" onclick="move('LHat', +1)">▶</div>
+      </div>
+    </div>
+
+    <div class="randomize">
+      <span onclick="randomizeBrah()">RANDOMIZE BRAH</span>
+    </div>
+
+    <div class="download">
+      <span onclick="downloadBrah()">DOWNLOAD BRAH</span>
+      <a id="link"></a>
+    </div>
+
+    <script>
+      const LBackground = "LBackground";
+      const LBrah = "LBrah";
+      const LShades = "LShades";
+      const LHat = "LHat";
+      const LLogo = "LLogo";
+
+      const layers = {
+        [LBackground]: [
+          "background0.png", //
+          "background1.png",
+        ],
+        [LBrah]: [
+          "brah1.png", //
+        ],
+        [LShades]: [
+          "shades0.png", //
+          "shades1.png",
+        ],
+        [LHat]: [
+          "hat0.png", //
+          "hat1.png",
+          "hat2.png",
+          "hat3.png",
+        ],
+        [LLogo]: [
+          "logo.png", //
+        ],
+      };
+
+      let currentBrah = null; // layer name -> layer index
+
+      const canvasWidth = 400;
+      const canvasHeight = 400;
+
+      const canvasNode = document.getElementById("canvas");
+      canvasNode.setAttribute("width", canvasWidth);
+      canvasNode.setAttribute("height", canvasHeight);
+
+      const canvasCtx = canvasNode.getContext("2d");
+
+      function downloadBrah() {
+        const link = document.getElementById("link");
+        link.setAttribute("download", "MyBrah.png");
+        link.setAttribute("href", canvasNode.toDataURL("image/png").replace("image/png", "image/octet-stream"));
+        link.click();
+      }
+
+      function getImage(layer, src) {
+        const img = new Image();
+        img.src = `./layers/${src}`;
+        return new Promise((res, rej) => {
+          img.onload = () => res({ layer, img });
+        });
+      }
+
+      function drawLayers() {
+        const promises = [LBackground, LBrah, LShades, LHat, LLogo].map((x) => {
+          return getImage(x, layers[x][currentBrah[x]]);
+        });
+
+        Promise.all(promises).then((imgs) => {
+          imgs.forEach(({ layer, img }) => {
+            document.getElementById(layer).setAttribute("src", img.src);
+          });
+
+          canvasCtx.clearRect(0, 0, canvasWidth, canvasHeight);
+          imgs.forEach(({ layer, img }) => {
+            canvasCtx.drawImage(img, 0, 0, canvasWidth, canvasHeight);
+          });
+        });
+      }
+
+      function randn(n) {
+        return Math.floor(Math.random() * n);
+      }
+
+      function createRandomBrah() {
+        return {
+          [LBackground]: randn(layers[LBackground].length),
+          [LBrah]: randn(layers[LBrah].length),
+          [LShades]: randn(layers[LShades].length),
+          [LHat]: randn(layers[LHat].length),
+          [LLogo]: randn(layers[LLogo].length),
+        };
+      }
+
+      function randomizeBrah() {
+        currentBrah = createRandomBrah();
+        drawLayers();
+      }
+
+      function move(layer, dir) {
+        const n = layers[layer].length;
+        if (dir >= 0) {
+          currentBrah[layer]++;
+          if (currentBrah[layer] >= n) {
+            currentBrah[layer] = 0;
+          }
+        } else {
+          currentBrah[layer]--;
+          if (currentBrah[layer] < 0) {
+            currentBrah[layer] = n - 1;
+          }
+        }
+
+        drawLayers();
+      }
+
+      document.getElementById("imgs").addEventListener("contextmenu", (event) => {
+        event.preventDefault();
+      });
+
+      randomizeBrah();
+    </script>
+  </body>
+</html>

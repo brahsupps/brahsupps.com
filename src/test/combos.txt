@@ -1,0 +1,25 @@
+
+
+HEIGHT      BMI         BENCH           |   | RESULT
+----------------------------------------+-------------
+tall        skinny      strong          |   |   draugr
+tall        skinny      weak            |   |   lanklet
+tall        brah        strong          |   |   Rich Piana
+tall        brah        weak            |   |   businessman
+tall        fat         strong          |   |   Kyriakos Grizzly
+tall        fat         weak            |   |   hamplanet
+average     skinny      strong          |   |   sleeper
+average     skinny      weak            |   |   twink
+average     brah        strong          |   |   gymbro
+average     brah        weak            |   |   normie
+average     fat         strong          |   |   ???
+average     fat         weak            |   |   Potato sack
+short       skinny      strong          |   |   Bruce Lee
+short       skinny      weak            |   |   factory child
+short       brah        strong          |   |   gymcel
+short       brah        weak            |   |   manlet
+short       fat         strong          |   |   dwarf
+short       fat         weak            |   |   dumpling
+
+
+

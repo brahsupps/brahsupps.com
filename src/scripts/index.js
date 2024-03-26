@@ -1,4 +1,7 @@
 const products = [
+  { name: "PURE COCONUT-BASED OIL", price: "1,500 ¥", src: "pure-coconut-based-oil.jpg" },
+  { name: "TOTAL CLEANSE", price: "1,200 ¥", src: "total-cleanse.jpg" },
+  { name: "STRONG BUCK", price: "3,000 ¥", src: "strong-buck.jpg" },
   { name: "HORNYGOAT MILK", price: "1,200 ¥", src: "hornygoat-milk.jpg" },
   { name: "APETAMIN", price: "3,000 ¥", src: "apetamin.jpg" },
   { name: "SAIGA HORN 10g", price: "3,200 ¥", src: "saiga-horn.gif" },
