@@ -1,8 +1,26 @@
+<!--
+
+  IMPORTANTS / 重要信息
+
+  For developer in future time:
+
+    - It is neccessary this everyone images am png and ended on ".png".
+    - The changing names for assets would do broke existing links the
+      (but programmed would do still worked).
+
+  For inspection person:
+
+    - If that to you are a discovered that bug, pleasure message @brahsupps
+      in twitter or contact@brahsupps.com in email.
+    - Please are enjoyed BRAH BUILDER program code.
+
+ -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=0.6" />
 
     <title>BRAH BUILDER</title>
 
@@ -35,22 +53,48 @@
       * {
         box-sizing: border-box;
       }
+
+      html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+      }
+
       body {
         font-family: PublicPixel, "Courier New", Courier, monospace;
         text-align: center;
         margin: 0;
-        background: black;
-        color: white;
+        padding: 0;
+        height: 100%;
         user-select: none;
+
+        color: white;
+
+        text-shadow: 2px 2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, -2px -2px 0 #000, 2px 0px 0 #000, 0px 2px 0 #000,
+          -2px 0px 0 #000, 0px -2px 0 #000;
+
+        background: black;
+        backdrop-filter: blur(4px) brightness(30%) saturate(80%);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+      }
+
+      h1 {
+        margin: 0;
+        padding: 16px;
+      }
+
+      h2 {
+        font-size: 18px;
       }
 
       #imgs {
         position: relative;
-        /* background: white; */
-        margin: 32px auto 0;
+        margin: 24px auto 0;
         border: 4px inset gold;
-        width: 408px;
-        height: 408px;
+        width: 340px;
+        height: 340px;
       }
       #imgs img {
         position: absolute;
@@ -62,39 +106,70 @@
 
       .selectors {
         margin: 0 auto;
-        padding: 16px 0;
+        padding: 12px 0;
       }
       .selector {
         display: flex;
         flex-flow: row wrap;
         justify-content: center;
         align-items: center;
+        padding: 10px 0;
+      }
+      .selector.locked .layertype,
+      .selector.locked .layername {
+        opacity: 0.3;
+      }
+      .layertype {
+        padding-bottom: 8px;
+        font-size: 11px;
+        color: #888;
+        text-transform: uppercase;
       }
       .layername {
-        width: 280px;
-        font-size: 20px;
+        width: 360px;
+        font-size: 16px;
       }
       .arrow {
         font-size: 36px;
+        line-height: 1;
         cursor: pointer;
         color: red;
-        transform: translateY(-4px);
+        transform: translateY(2px);
       }
       .arrow:hover {
         color: white;
       }
+      .opt {
+        width: 30px;
+        font-size: 24px;
+        margin: 0 16px;
+        line-height: 1;
+        cursor: pointer;
+        /* color: red; */
+        transform: translateY(4px);
+      }
 
       .randomize,
-      .download {
+      .download,
+      .copy-link {
         padding: 8px 0;
       }
       .randomize span,
-      .download span {
+      .download span,
+      .copy-link span {
         color: red;
         cursor: pointer;
       }
+      .player {
+        cursor: pointer;
+        position: fixed;
+        top: 8px;
+        right: 8px;
+        font-size: 24px;
+      }
       .randomize span:hover,
-      .download span:hover {
+      .download span:hover,
+      .copy-link span:hover {
         font-size: 36;
         color: white;
       }
@@ -108,37 +183,63 @@
 
     <div id="imgs">
       <img src="checkered.png" style="opacity: 0.2" />
-      <img id="LBackground" />
-      <img id="LBrah" />
-      <img id="LShades" />
-      <img id="LHat" />
-      <img id="LLogo" />
     </div>
 
     <div class="selectors">
-      <div class="selector">
-        <div class="arrow" onclick="move('LBackground', -1)">◀</div>
-        <div class="layername">BACKGROUND</div>
-        <div class="arrow" onclick="move('LBackground', +1)">▶</div>
+      <div class="selector" id="Place-selector">
+        <div class="opt rand" id="Place-rand"></div>
+        <div class="arrow" onclick="move('Place', -1)">◀</div>
+        <div>
+          <div class="layertype">Place</div>
+          <div class="layername" id="Place-name"></div>
+        </div>
+        <div class="arrow" onclick="move('Place', +1)">▶</div>
+        <div class="opt lock" id="Place-lock" onclick="toggleLock('Place')"></div>
       </div>
 
-      <div class="selector">
-        <div class="arrow" onclick="move('LBrah', -1)">◀</div>
-        <div class="layername">BRAH</div>
-        <div class="arrow" onclick="move('LBrah', +1)">▶</div>
+      <div class="selector" id="Head-selector">
+        <div class="opt rand" id="Head-rand"></div>
+        <div class="arrow" onclick="move('Head', -1)">◀</div>
+        <div>
+          <div class="layertype">Head</div>
+          <div class="layername" id="Head-name"></div>
+        </div>
+        <div class="arrow" onclick="move('Head', +1)">▶</div>
+        <div class="opt lock" id="Head-lock" onclick="toggleLock('Head')"></div>
       </div>
+    </div>
 
-      <div class="selector">
-        <div class="arrow" onclick="move('LShades', -1)">◀</div>
-        <div class="layername">SHADES</div>
-        <div class="arrow" onclick="move('LShades', +1)">▶</div>
+    <div class="selector" id="Accessory-selector">
+      <div class="opt rand" id="Accessory-rand"></div>
+      <div class="arrow" onclick="move('Accessory', -1)">◀</div>
+      <div>
+        <div class="layertype">Accessory</div>
+        <div class="layername" id="Accessory-name"></div>
       </div>
+      <div class="arrow" onclick="move('Accessory', +1)">▶</div>
+      <div class="opt lock" id="Accessory-lock" onclick="toggleLock('Accessory')"></div>
+    </div>
 
-      <div class="selector">
-        <div class="arrow" onclick="move('LHat', -1)">◀</div>
-        <div class="layername">HAT</div>
-        <div class="arrow" onclick="move('LHat', +1)">▶</div>
+    <div class="selector" id="Shirt-selector">
+      <div class="opt rand" id="Shirt-rand"></div>
+      <div class="arrow" onclick="move('Shirt', -1)">◀</div>
+      <div>
+        <div class="layertype">Shirt</div>
+        <div class="layername" id="Shirt-name"></div>
       </div>
+      <div class="arrow" onclick="move('Shirt', +1)">▶</div>
+      <div class="opt lock" id="Shirt-lock" onclick="toggleLock('Shirt')"></div>
+    </div>
+
+    <div class="selector" id="Tone-selector">
+      <div class="opt rand" id="Tone-rand"></div>
+      <div class="arrow" onclick="move('Tone', -1)">◀</div>
+      <div>
+        <div class="layertype">Tone</div>
+        <div class="layername" id="Tone-name"></div>
+      </div>
+      <div class="arrow" onclick="move('Tone', +1)">▶</div>
+      <div class="opt lock" id="Tone-lock" onclick="toggleLock('Tone')"></div>
     </div>
 
     <div class="randomize">
@@ -150,69 +251,295 @@
       <a id="link"></a>
     </div>
 
+    <!-- It are sort of the not necessary. -->
+    <!-- <div class="copy-link">
+      <span onclick="copyLinkToBrah()">COPY LINK TO CLIPBOARD</span>
+    </div> -->
+
+    <span id="player" class="player"></span>
+
     <script>
-      const LBackground = "LBackground";
-      const LBrah = "LBrah";
-      const LShades = "LShades";
-      const LHat = "LHat";
-      const LLogo = "LLogo";
+      const downloadedFilename = "MyBrah.png";
+
+      const moveAudioSrc = "audio/click.mp3";
+      const lockAudioSrc = "audio/click.mp3";
+      const randAudioSrc = "audio/random.mp3";
+      const songAudioSrc = "audio/song1.mp3";
+      const toggleAudioSrc = "audio/click.mp3";
+
+      const Place = "Place";
+      const Tone = "Tone";
+      const Shirt = "Shirt";
+      const Head = "Head";
+      const Accessory = "Accessory";
+      const Logo = "Logo";
+
+      const layerNames = [
+        Place,
+        Tone,
+        Shirt,
+        Head,
+        Accessory,
+        Logo, //
+      ];
 
       const layers = {
-        [LBackground]: [
-          "background0.png", //
-          "background1.png",
+        [Place]: [
+          "None.png", //
+          "Beijing.png",
+          "Chen's Courtyard.png",
+          "Factory.png",
+          "Hangzhou.png",
+          "Guilin River.png",
+          "Gym.png",
+          "Shaolin Temple.png",
+          "Venue.png",
+          "The Great Wall.png",
+          "Wenzhou.png",
+          "Xi'an City Wall.png",
+          "Xi'an City Mall.png",
         ],
-        [LBrah]: [
-          "brah1.png", //
+        [Tone]: [
+          "01.png", //
+          "02.png",
+          "03.png",
+          "04.png",
+          "05.png",
+          "06.png",
+          "07.png",
+          "08.png",
+          "09.png",
+          "10.png",
+          "11.png",
+          "12.png",
         ],
-        [LShades]: [
-          "shades0.png", //
-          "shades1.png",
+        [Shirt]: [
+          "None.png",
+          "Adimas.png",
+          "BRAH SUPPS Black.png",
+          "BRAHZIL.png",
+          "CHINA.png",
+          "Dragon Black.png",
+          "Dragon White.png",
+          "Fashion.png",
+          "FREAK IT! Blue.png",
+          "FREAK IT! Orange.png",
+          "General Tsao.png",
+          "HOT LOVE.png",
+          "Ming Dynasty Mindset.png",
+          "Plain Dark.png",
+          "Plain White.png",
+          "Project REMILIA.png",
+          "Sonic Obama.png",
+          "Teresa Tang.png",
+          "WENZHOU.png",
+          "YaheeTech.png",
+          "Yin Yang Black.png",
+          "Yin Yang White.png",
         ],
-        [LHat]: [
-          "hat0.png", //
-          "hat1.png",
-          "hat2.png",
-          "hat3.png",
+        [Head]: [
+          "None.png", //
+
+          "Baseball Cap.png",
+
+          "Mandarin Hat.png",
+          "Mandarin Hat (Bald).png",
+
+          // TODO
+          // "Rice Hat.png",
+          // "Rice Hat (Bald).png",
+
+          "White Hardhat.png",
+          "White Hardhat (Bald).png",
+
+          "Yellow Hardhat.png",
+          "Yellow Hardhat (Bald).png",
+
+          "Brown Hair.png",
+          "Dark Hair.png",
+          "Golden Hair.png",
+          "Gray Hair.png",
+          "Purple Hair.png",
+          "Pink Hair.png",
+          "Red Hair.png",
+          "Orange Hair.png",
+          "Green Hair.png",
+          "Blue Hair.png",
+          "White Hair.png",
+
+          "Brown Skin Fade.png",
+          "Dark Skin Fade.png",
+          "Golden Skin Fade.png",
+          "Gray Skin Fade.png",
+          "Purple Skin Fade.png",
+          "Pink Skin Fade.png",
+          "Red Skin Fade.png",
+          "Orange Skin Fade.png",
+          "Green Skin Fade.png",
+          "Blue Skin Fade.png",
+          "White Skin Fade.png",
+
+          "Brown Afro.png",
+          "Dark Afro.png",
+          "Golden Afro.png",
+          "Gray Afro.png",
+          "Purple Afro.png",
+          "Pink Afro.png",
+          "Red Afro.png",
+          "Orange Afro.png",
+          "Green Afro.png",
+          "Blue Afro.png",
+          "White Afro.png",
+
+          "Brown Bowl Cut.png",
+          "Dark Bowl Cut.png",
+          "Golden Bowl Cut.png",
+          "Gray Bowl Cut.png",
+          "Purple Bowl Cut.png",
+          "Pink Bowl Cut.png",
+          "Red Bowl Cut.png",
+          "Orange Bowl Cut.png",
+          "Green Bowl Cut.png",
+          "Blue Bowl Cut.png",
+          "White Bowl Cut.png",
+
+          "Dark Durag.png",
+          "Gray Durag.png",
+          "Purple Durag.png",
+          "Pink Durag.png",
+          "Red Durag.png",
+          "Orange Durag.png",
+          "Yellow Durag.png",
+          "Green Durag.png",
+          "Blue Durag.png",
+          "White Durag.png",
+
+          "Brown Mohawk.png",
+          "Dark Mohawk.png",
+          "Golden Mohawk.png",
+          "Purple Mohawk.png",
+          "Pink Mohawk.png",
+          "Red Mohawk.png",
+          "Orange Mohawk.png",
+          "Blue Mohawk.png",
+          "Sky Blue Durag.png",
+          "Green Mohawk.png",
+          "White Mohawk.png",
         ],
-        [LLogo]: [
-          "logo.png", //
+        [Accessory]: [
+          "None.png", //
+
+          "$HAGGORD Shades.png",
+          "MOG.png",
+          "Mask.png",
+
+          "Black Sports.png",
+          "Dark Sports.png",
+          "Purple Sports.png",
+          "Blue Sports.png",
+          "Green Sports.png",
+          "Yellow Sports.png",
+          "Orange Sports.png",
+          "Red Sports.png",
+          "Pink Sports.png",
+
+          "Dark Aliens.png",
+          "Purple Aliens.png",
+          "Blue Aliens.png",
+          "Green Aliens.png",
+          "Yellow Aliens.png",
+          "Orange Aliens.png",
+          "Red Aliens.png",
+          "Pink Aliens.png",
+        ],
+        [Logo]: [
+          "Logo.png", //
         ],
       };
 
-      let currentBrah = null; // layer name -> layer index
+      const locked = {
+        [Place]: false,
+        [Tone]: false,
+        [Shirt]: false,
+        [Head]: false,
+        [Accessory]: false,
+      };
 
+      function toggleLock(layer) {
+        locked[layer] = !locked[layer];
+
+        if (locked[layer]) {
+          document.getElementById(`${layer}-selector`).classList.add("locked");
+          document.getElementById(`${layer}-lock`).innerText = "🔒";
+        } else {
+          document.getElementById(`${layer}-selector`).classList.remove("locked");
+          document.getElementById(`${layer}-lock`).innerText = "🔓";
+        }
+
+        playSound(lockAudioSrc);
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        for (const layer in locked) {
+          document.getElementById(`${layer}-lock`).innerText = locked[layer] ? "🔒" : "🔓";
+        }
+      });
+
+      // Map from layer name -> layer index.
+      let currentBrah = null;
+
+      // That should the take same dimensions the to source images.
       const canvasWidth = 400;
       const canvasHeight = 400;
 
-      const canvasNode = document.getElementById("canvas");
-      canvasNode.setAttribute("width", canvasWidth);
-      canvasNode.setAttribute("height", canvasHeight);
+      let canvasNode = null;
+      let canvasCtx = null;
 
-      const canvasCtx = canvasNode.getContext("2d");
+      document.addEventListener("DOMContentLoaded", () => {
+        canvasNode = document.getElementById("canvas");
+        canvasNode.setAttribute("width", canvasWidth);
+        canvasNode.setAttribute("height", canvasHeight);
 
-      function downloadBrah() {
-        const link = document.getElementById("link");
-        link.setAttribute("download", "MyBrah.png");
-        link.setAttribute("href", canvasNode.toDataURL("image/png").replace("image/png", "image/octet-stream"));
-        link.click();
+        canvasCtx = canvasNode.getContext("2d");
+      });
+
+      function downloadBrah(filename = null) {
+        // TODO - res
+        drawLayers(currentBrah, { fullRes: false }).then(() => {
+          const link = document.getElementById("link");
+          link.setAttribute("download", filename ?? downloadedFilename);
+          link.setAttribute("href", canvasNode.toDataURL("image/png").replace("image/png", "image/octet-stream"));
+          link.click();
+        });
       }
 
-      function getImage(layer, src) {
+      function copyLinkToBrah() {
+        navigator.clipboard.writeText(window.location.href);
+      }
+
+      function getImage(layer, src, options = { fullRes: false }) {
         const img = new Image();
-        img.src = `./layers/${src}`;
+        if (options.fullRes) {
+          img.src = `./layers-full/${layer}/${src}`; // TODO
+        } else {
+          img.src = `./layers/${layer}/${src}`;
+        }
         return new Promise((res, rej) => {
           img.onload = () => res({ layer, img });
         });
       }
 
-      function drawLayers() {
-        const promises = [LBackground, LBrah, LShades, LHat, LLogo].map((x) => {
-          return getImage(x, layers[x][currentBrah[x]]);
+      function drawLayers(brah, options = { saveTo: null, fullRes: false }) {
+        const promises = layerNames.map((x) => {
+          return getImage(x, layers[x][brah[x]], { fullRes: options.fullRes });
         });
 
-        Promise.all(promises).then((imgs) => {
+        const promise = Promise.all(promises).then((imgs) => {
           imgs.forEach(({ layer, img }) => {
+            if (layer === Place) {
+              document.body.style.backgroundImage = `url("${img.src}")`;
+            }
+
             document.getElementById(layer).setAttribute("src", img.src);
           });
 
@@ -220,7 +547,86 @@
           imgs.forEach(({ layer, img }) => {
             canvasCtx.drawImage(img, 0, 0, canvasWidth, canvasHeight);
           });
+
+          if (options.saveTo != null) {
+            downloadBrah(options.saveTo);
+          }
         });
+
+        layerNames.forEach((layerName) => {
+          if (layerName === Logo) return;
+
+          const filename = layers[layerName][brah[layerName]];
+          if (filename) {
+            const assetname = filename.replace(/\.[^/.]+$/, "");
+            const node = document.getElementById(`${layerName}-name`);
+            if (node) node.innerText = assetname;
+          }
+        });
+
+        window.location.hash = createParamString(brah);
+
+        return promise;
+      }
+
+      function createParamString(brah) {
+        const urlParams = new URLSearchParams();
+
+        layerNames.forEach((layerName) => {
+          if (layerName === Logo) return;
+          const filename = layers[layerName][brah[layerName]];
+          if (filename) {
+            const assetname = filename.replace(/\.[^/.]+$/, "");
+            urlParams.set(layerName, assetname);
+          }
+        });
+
+        // window.location.hash = btoa(urlParams.toString());
+        return urlParams.toString();
+      }
+
+      function brahWithParams(brah) {
+        const hash = window.location.hash.slice(1);
+        if (!hash) {
+          return brah;
+        }
+
+        // try {
+        //   atob(hash);
+        // } catch (err) {
+        //   return brah;
+        // }
+        // const p = atob(hash);
+        // if (!p) {
+        //   return brah;
+        // }
+        const p = hash;
+
+        const params = new URLSearchParams(p);
+
+        layerNames.forEach((layerName) => {
+          if (layerName === Logo) return;
+
+          const assetname = params.get(layerName);
+          if (assetname) {
+            const filename = assetname + ".png";
+            const index = layers[layerName].indexOf(filename);
+            if (index >= 0) {
+              brah[layerName] = index;
+            }
+          }
+        });
+
+        return brah;
+      }
+
+      function playSound(src, volume = 0.5) {
+        const audio = new Audio(src);
+        if (!audio) return console.log(`audio source '${src}' not found`);
+        if (volume < 0) volume = 0;
+        if (volume > 1) volume = 1;
+        audio.volume = volume;
+        audio.play();
       }
 
       function randn(n) {
@@ -229,17 +635,41 @@
 
       function createRandomBrah() {
         return {
-          [LBackground]: randn(layers[LBackground].length),
-          [LBrah]: randn(layers[LBrah].length),
-          [LShades]: randn(layers[LShades].length),
-          [LHat]: randn(layers[LHat].length),
-          [LLogo]: randn(layers[LLogo].length),
+          [Place]: randn(layers[Place].length),
+          [Tone]: randn(layers[Tone].length),
+          [Shirt]: randn(layers[Shirt].length),
+          [Accessory]: randn(layers[Accessory].length),
+          [Head]: randn(layers[Head].length),
+          [Logo]: randn(layers[Logo].length),
         };
       }
 
-      function randomizeBrah() {
-        currentBrah = createRandomBrah();
-        drawLayers();
+      function randomizeBrah(options = { silent: false, useParams: false, saveTo: null }) {
+        let brah = createRandomBrah();
+
+        // overwrite random traits with traits from parameters
+        if (options.useParams) {
+          brah = brahWithParams({ ...brah });
+        }
+
+        // just to prevent playing a sound when the page loads
+        if (!options.silent) {
+          playSound(randAudioSrc);
+        }
+
+        // if a brah already exists, overwrite unlocked layers only
+        if (currentBrah != null) {
+          for (const layer in brah) {
+            if (locked[layer]) continue;
+            currentBrah[layer] = brah[layer];
+          }
+        }
+        // otherwise just use what's available
+        else {
+          currentBrah = brah;
+        }
+
+        drawLayers(currentBrah);
       }
 
       function move(layer, dir) {
@@ -256,14 +686,85 @@
           }
         }
 
-        drawLayers();
+        playSound(moveAudioSrc);
+        drawLayers(currentBrah);
       }
 
-      document.getElementById("imgs").addEventListener("contextmenu", (event) => {
-        event.preventDefault();
+      /////////////////////////////////////////////////////////////////////////
+      //
+      //  Background song
+      //
+
+      let clickedBodyOnce = false;
+      let songAudio = new Audio(undefined);
+
+      document.addEventListener("DOMContentLoaded", () => {
+        songAudio = new Audio(songAudioSrc);
+        if (!songAudio) {
+          console.log(`song source '${src}' not found`);
+          return;
+        }
+
+        songAudio.onplaying = () => {
+          document.getElementById("player").innerText = "⏸";
+        };
+        songAudio.onpause = () => {
+          document.getElementById("player").innerText = "⏵";
+        };
+
+        songAudio.volume = 0.5;
+        songAudio.loop = true;
+
+        document.body.addEventListener("click", () => {
+          if (clickedBodyOnce) return;
+          songAudio.play();
+          clickedBodyOnce = true;
+        });
+
+        document.getElementById("player").addEventListener("click", () => {
+          playSound(toggleAudioSrc);
+          if (songAudio.paused) {
+            songAudio.play();
+          } else {
+            songAudio.pause();
+          }
+        });
       });
 
-      randomizeBrah();
+      /////////////////////////////////////////////////////////////////////////
+      //
+      //  Initialization
+      //
+
+      function createBrah(i) {
+        if (i > 1000) return;
+
+        setTimeout(() => {
+          const brah = createRandomBrah();
+          const filename = String(i).padStart(4, "0") + ".png";
+
+          drawLayers(brah, { saveTo: filename });
+
+          createBrah(i + 1);
+        }, 250);
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("imgs").addEventListener("contextmenu", (event) => {
+          event.preventDefault();
+        });
+
+        layerNames.forEach((layerName) => {
+          const imgNode = document.createElement("img");
+          imgNode.setAttribute("id", layerName);
+          document.getElementById("imgs").appendChild(imgNode);
+        });
+
+        randomizeBrah({ silent: true, useParams: true });
+
+        // To generate Brahs
+        // createBrah(1);
+      });
     </script>
   </body>
 </html>

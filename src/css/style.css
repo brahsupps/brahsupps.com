@@ -32,11 +32,13 @@ a:hover {
 }
 
 .left {
-  flex: 0 0 220px;
+  flex: 0 0 176px;
+  /* 220 before */
 }
 
 .right {
-  flex: 0 0 280px;
+  flex: 0 0 224px;
+  /* 280 before */
 }
 
 .middle {
@@ -112,29 +114,38 @@ a:hover {
 }
 
 .product {
-  /* margin: 0 auto; */
   padding: 16px;
-  max-width: 300px;
-  border: 2px inset transparent;
+  max-width: 260px;
+  transition: all 0.1s ease;
 }
 
 .product:hover {
-  border: 4px inset red;
-  cursor: pointer;
+  transform: scale(1.05);
+  background: white;
+  color: black;
+}
+.product:hover a {
+  color: blue;
 }
 
 .product > img {
   display: block;
   margin: 0 auto;
-  height: 240px;
+  height: 200px;
   width: auto;
   max-width: 100%;
 }
 
-.product > div {
+.product > .name {
   display: block;
   margin-top: 8px;
-  font-size: 20px;
+  font-size: 16px;
+  text-align: center;
+}
+.product > .price {
+  display: block;
+  /* margin-top: 8px; */
+  font-size: 16px;
   text-align: center;
 }
 

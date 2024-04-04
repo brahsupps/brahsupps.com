@@ -143,8 +143,15 @@ const makeProducts = (productsNode, products) => {
       node.appendChild(imgNode);
 
       const textNode = document.createElement("div");
-      textNode.innerText = `${name} / ${price}`;
+      textNode.setAttribute("class", "name");
+      // textNode.innerText = `${name} / ${price}`;
+      textNode.innerText = `${name}`;
       node.appendChild(textNode);
+
+      const priceNode = document.createElement("div");
+      priceNode.setAttribute("class", "price");
+      priceNode.innerText = `${price}`;
+      node.appendChild(priceNode);
 
       productsNode.appendChild(node);
     }
