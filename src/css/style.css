@@ -1,6 +1,6 @@
 * {
   box-sizing: border-box;
-  cursor: url("../res/misc/cursor64.png"), auto;
+  cursor: url("../res/misc/cursor64.png"), auto; /* or only body */
 }
 
 html {
@@ -106,6 +106,50 @@ a:hover {
   display: block;
   color: lightblue;
   text-decoration: underline;
+}
+
+.boxes {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.box {
+  /* cursor: pointer; */
+
+  text-decoration: none;
+
+  flex: 1;
+  margin: 8px;
+  min-width: 400px;
+
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+
+  transition: all 0.1s ease;
+}
+.box:hover {
+  transform: scale(1.05);
+}
+
+.box-bbs {
+  border: 8px inset gold;
+  background: darkred;
+  color: white;
+}
+.box-bbs:hover {
+  background: red;
+  border: 8px inset yellow;
+}
+
+.box-brahbuilder {
+  border: 8px inset darkred;
+  background: gold;
+  color: black;
+}
+.box-brahbuilder:hover {
+  border: 8px inset red;
+  background: yellow;
 }
 
 .products {

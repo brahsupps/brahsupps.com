@@ -95,6 +95,7 @@
         border: 4px inset gold;
         width: 340px;
         height: 340px;
+        overflow: hidden;
       }
       #imgs img {
         position: absolute;
@@ -102,6 +103,24 @@
         top: 0;
         width: 100%;
         height: 100%;
+      }
+      #imgs.pfpMode img {
+        left: 50%;
+        top: 0;
+        width: 133.333%;
+        height: 133.333%;
+        transform: translate(-50%, 0%);
+      }
+
+      #imgs.pfpMode #Place {
+        filter: blur(2px) saturate(80%);
+      }
+      #imgs.pfpMode #Logo {
+        display: none;
+      }
+      .glow {
+        display: none;
+        filter: drop-shadow(0 0 6px white);
       }
 
       .selectors {
@@ -173,6 +192,18 @@
         font-size: 36;
         color: white;
       }
+      #blah {
+        position: relative;
+        width: 340px;
+        margin: 0 auto;
+      }
+      #pfpToggle {
+        position: absolute;
+        right: -60px;
+        bottom: 0;
+        font-size: 32px;
+        cursor: pointer;
+      }
     </style>
   </head>
   <body>
@@ -180,9 +211,13 @@
     <h2>BUILD YOUR OWN BRAH</h2>
 
     <canvas id="canvas" style="display: none"></canvas>
+    <!-- <canvas id="canvas"></canvas> -->
 
-    <div id="imgs">
-      <img src="checkered.png" style="opacity: 0.2" />
+    <div id="blah">
+      <div id="imgs">
+        <img src="checkered.png" style="opacity: 0.2" />
+      </div>
+      <span id="pfpToggle" onclick="toggleMode()">🔍</span>
     </div>
 
     <div class="selectors">
@@ -258,6 +293,8 @@
 
     <span id="player" class="player"></span>
 
+    <script src="./context-filter-polyfill.min.js"></script>
+
     <script>
       const downloadedFilename = "MyBrah.png";
 
@@ -266,6 +303,9 @@
       const randAudioSrc = "audio/random.mp3";
       const songAudioSrc = "audio/song1.mp3";
       const toggleAudioSrc = "audio/click.mp3";
+
+      const pfpBgFilter = "blur(2px) saturate(80%)";
+      const pfpGlowFilter = "drop-shadow(0 0 10px white)";
 
       const Place = "Place";
       const Tone = "Tone";
@@ -283,18 +323,47 @@
         Logo, //
       ];
 
+      const glows = {
+        [Tone]: true,
+        [Shirt]: true,
+        [Head]: true,
+        [Accessory]: true,
+      };
+
       const layers = {
         [Place]: [
           "None.png", //
+          "Alley.png",
+          "Battlefield.png",
           "Beijing.png",
+          "Bo Jin's Workshop.png",
           "Chen's Courtyard.png",
+          "Cheung Sha Beach.png",
+          "Chongqing.png",
+          "Congress Hall.png",
+          "Dam.png",
           "Factory.png",
           "Hangzhou.png",
+          "Huashan Plank Walk.png",
           "Guilin River.png",
           "Gym.png",
+          "Living Room.png",
+          "Market.png",
+          "Mona Lisa.png",
+          "Monster Building.png",
+          "Mount Everest.png",
+          "Opium Den.png",
+          "Qin Palace.png",
+          "Revolution.png",
+          "Rice Terraces.png",
+          "Rustic Apartment.png",
+          "Semiconductor Factory.png",
           "Shaolin Temple.png",
-          "Venue.png",
           "The Great Wall.png",
+          "Tiananmen Square.png",
+          "Venice.png",
+          "Venue.png",
+          "Virus Safety Facility.png",
           "Wenzhou.png",
           "Xi'an City Wall.png",
           "Xi'an City Mall.png",
@@ -312,6 +381,9 @@
           "10.png",
           "11.png",
           "12.png",
+          "13.png",
+          "14.png",
+          "15.png",
         ],
         [Shirt]: [
           "None.png",
@@ -330,6 +402,7 @@
           "Plain Dark.png",
           "Plain White.png",
           "Project REMILIA.png",
+          "Sarah Wukong 1994.png",
           "Sonic Obama.png",
           "Teresa Tang.png",
           "WENZHOU.png",
@@ -357,48 +430,48 @@
 
           "Brown Hair.png",
           "Dark Hair.png",
-          "Golden Hair.png",
           "Gray Hair.png",
           "Purple Hair.png",
           "Pink Hair.png",
           "Red Hair.png",
           "Orange Hair.png",
+          "Golden Hair.png",
           "Green Hair.png",
           "Blue Hair.png",
           "White Hair.png",
 
           "Brown Skin Fade.png",
           "Dark Skin Fade.png",
-          "Golden Skin Fade.png",
           "Gray Skin Fade.png",
           "Purple Skin Fade.png",
           "Pink Skin Fade.png",
           "Red Skin Fade.png",
           "Orange Skin Fade.png",
+          "Golden Skin Fade.png",
           "Green Skin Fade.png",
           "Blue Skin Fade.png",
           "White Skin Fade.png",
 
           "Brown Afro.png",
           "Dark Afro.png",
-          "Golden Afro.png",
           "Gray Afro.png",
           "Purple Afro.png",
           "Pink Afro.png",
           "Red Afro.png",
           "Orange Afro.png",
+          "Golden Afro.png",
           "Green Afro.png",
           "Blue Afro.png",
           "White Afro.png",
 
           "Brown Bowl Cut.png",
           "Dark Bowl Cut.png",
-          "Golden Bowl Cut.png",
           "Gray Bowl Cut.png",
           "Purple Bowl Cut.png",
           "Pink Bowl Cut.png",
           "Red Bowl Cut.png",
           "Orange Bowl Cut.png",
+          "Golden Bowl Cut.png",
           "Green Bowl Cut.png",
           "Blue Bowl Cut.png",
           "White Bowl Cut.png",
@@ -412,18 +485,18 @@
           "Yellow Durag.png",
           "Green Durag.png",
           "Blue Durag.png",
+          "Sky Blue Durag.png",
           "White Durag.png",
 
           "Brown Mohawk.png",
           "Dark Mohawk.png",
-          "Golden Mohawk.png",
           "Purple Mohawk.png",
           "Pink Mohawk.png",
           "Red Mohawk.png",
           "Orange Mohawk.png",
-          "Blue Mohawk.png",
-          "Sky Blue Durag.png",
+          "Golden Mohawk.png",
           "Green Mohawk.png",
+          "Blue Mohawk.png",
           "White Mohawk.png",
         ],
         [Accessory]: [
@@ -436,21 +509,21 @@
           "Black Sports.png",
           "Dark Sports.png",
           "Purple Sports.png",
-          "Blue Sports.png",
-          "Green Sports.png",
-          "Yellow Sports.png",
-          "Orange Sports.png",
-          "Red Sports.png",
           "Pink Sports.png",
+          "Red Sports.png",
+          "Orange Sports.png",
+          "Yellow Sports.png",
+          "Green Sports.png",
+          "Blue Sports.png",
 
           "Dark Aliens.png",
           "Purple Aliens.png",
-          "Blue Aliens.png",
-          "Green Aliens.png",
-          "Yellow Aliens.png",
-          "Orange Aliens.png",
-          "Red Aliens.png",
           "Pink Aliens.png",
+          "Red Aliens.png",
+          "Orange Aliens.png",
+          "Yellow Aliens.png",
+          "Green Aliens.png",
+          "Blue Aliens.png",
         ],
         [Logo]: [
           "Logo.png", //
@@ -488,7 +561,11 @@
       // Map from layer name -> layer index.
       let currentBrah = null;
 
-      // That should the take same dimensions the to source images.
+      // source image dimensions
+      const sourceWidth = 400;
+      const sourceHeight = 400;
+
+      // canvas size
       const canvasWidth = 400;
       const canvasHeight = 400;
 
@@ -503,8 +580,30 @@
         canvasCtx = canvasNode.getContext("2d");
       });
 
+      let pfpMode = false;
+
+      function toggleMode() {
+        setPfpMode(!pfpMode);
+      }
+
+      function setPfpMode(mode) {
+        pfpMode = mode;
+        if (mode) {
+          document.getElementById("imgs").classList.add("pfpMode");
+        } else {
+          document.getElementById("imgs").classList.remove("pfpMode");
+        }
+
+        const glowNodes = document.getElementsByClassName("glow");
+        for (const node of glowNodes) {
+          node.style.display = mode ? "block" : "none";
+        }
+
+        drawLayers(currentBrah);
+      }
+
       function downloadBrah(filename = null) {
-        // TODO - res
+        // TODO - resolution
         drawLayers(currentBrah, { fullRes: false }).then(() => {
           const link = document.getElementById("link");
           link.setAttribute("download", filename ?? downloadedFilename);
@@ -535,18 +634,60 @@
         });
 
         const promise = Promise.all(promises).then((imgs) => {
-          imgs.forEach(({ layer, img }) => {
+          for (const { layer, img } of imgs) {
+            if (pfpMode && layer === Logo) {
+              continue;
+            }
             if (layer === Place) {
               document.body.style.backgroundImage = `url("${img.src}")`;
             }
-
+            if (pfpMode && glows[layer]) {
+              document.getElementById(layer + "-glow").setAttribute("src", img.src);
+            }
             document.getElementById(layer).setAttribute("src", img.src);
-          });
+          }
+
+          const zoomLevel = pfpMode ? 4 / 3 : 1;
+
+          // source
+          const sx = (sourceWidth * (1 - 1 / zoomLevel)) / 2;
+          const sy = 0;
+          const sw = sourceWidth / zoomLevel;
+          const sh = sourceHeight / zoomLevel;
+
+          // destination
+          const [dx, dy] = [0, 0];
+          const [dw, dh] = [canvasWidth, canvasHeight];
+
+          const draw = (img, filter) => {
+            if (filter) canvasCtx.filter = filter;
+            canvasCtx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh);
+            if (filter) canvasCtx.filter = "none";
+          };
 
           canvasCtx.clearRect(0, 0, canvasWidth, canvasHeight);
-          imgs.forEach(({ layer, img }) => {
-            canvasCtx.drawImage(img, 0, 0, canvasWidth, canvasHeight);
-          });
+
+          for (const { layer, img } of imgs) {
+            if (layer === Place) {
+              draw(img, pfpBgFilter);
+            }
+            if (pfpMode && layer === Logo) {
+              continue;
+            }
+            if (pfpMode && glows[layer]) {
+              draw(img, pfpGlowFilter);
+            }
+          }
+
+          for (const { layer, img } of imgs) {
+            if (layer === Place) {
+              continue;
+            }
+            if (pfpMode && layer === Logo) {
+              continue;
+            }
+            draw(img);
+          }
 
           if (options.saveTo != null) {
             downloadBrah(options.saveTo);
@@ -705,6 +846,8 @@
           return;
         }
 
+        document.getElementById("player").innerText = "⏵";
+
         songAudio.onplaying = () => {
           document.getElementById("player").innerText = "⏸";
         };
@@ -715,11 +858,12 @@
         songAudio.volume = 0.5;
         songAudio.loop = true;
 
-        document.body.addEventListener("click", () => {
-          if (clickedBodyOnce) return;
-          songAudio.play();
-          clickedBodyOnce = true;
-        });
+        // Autplay is annoying
+        // document.body.addEventListener("click", () => {
+        //   if (clickedBodyOnce) return;
+        //   songAudio.play();
+        //   clickedBodyOnce = true;
+        // });
 
         document.getElementById("player").addEventListener("click", () => {
           playSound(toggleAudioSrc);
@@ -754,15 +898,29 @@
           event.preventDefault();
         });
 
-        layerNames.forEach((layerName) => {
+        const appendImg = ({ id, className = null }) => {
           const imgNode = document.createElement("img");
-          imgNode.setAttribute("id", layerName);
+          imgNode.setAttribute("id", id);
+          if (className) imgNode.classList.add(className);
           document.getElementById("imgs").appendChild(imgNode);
+        };
+
+        appendImg({ id: Place });
+
+        layerNames.forEach((layerName) => {
+          if (glows[layerName]) {
+            appendImg({ id: `${layerName}-glow`, className: "glow" });
+          }
+        });
+
+        layerNames.forEach((layerName) => {
+          if (layerName === Place) return;
+          appendImg({ id: layerName });
         });
 
         randomizeBrah({ silent: true, useParams: true });
 
-        // To generate Brahs
+        // To generate Brahs, do:
         // createBrah(1);
       });
     </script>
