@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>WAR</title>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@brahsupps" />
+    <meta name="twitter:title" content="BRAH SUPPS ARE AT WAR" />
+    <meta name="twitter:description" content="It are time for WAR. Declaration of war on competitor!" />
+    <meta name="twitter:image" content="https://brahsupps.com/res/misc/taiyangbrah.jpg" />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="BRAH SUPPS ARE AT WAR" />
+    <meta property="og:description" content="It are time for WAR. Declaration of war on competitor!" />
+    <meta property="og:url" content="https://brahsupps.com" />
+    <meta property="og:image" content="https://brahsupps.com/war/assets/misc/poster.jpg" />
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/res/favicon/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/res/favicon/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/res/favicon/favicon-16x16.png" />
+    <link rel="manifest" href="/res/favicon/site.webmanifest" />
+    <link rel="mask-icon" href="/res/favicon/safari-pinned-tab.svg" color="#ff0000" />
+    <meta name="msapplication-TileColor" content="#b91d47" />
+    <meta name="theme-color" content="#ffffff" />
+
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+
+  <body>
+    <img id="poster" src="./assets/misc/poster.jpg" />
+    <div class="wrapper">
+      <h1>It are time for WAR.</h1>
+      <h2>Declaration of war on competitor!</h2>
+
+      <div class="image-picker">
+        <label id="uploadLabel" for="file">Upload an image</label>
+        <input id="file" type="file" accept="image/*" />
+      </div>
+
+      <div id="spinner" hidden>
+        <div class="spinner-inner">
+          <div class="spinner-circle"></div>
+          <div class="spinner-text">Processing...</div>
+        </div>
+      </div>
+
+      <div id="sectionParsed" hidden>
+        <img id="result-image" />
+
+        <button id="download-button">Download</button>
+
+        <div id="leaderboard">
+          <a href="https://unicorn.meme/dashboard" target="_blank" rel="noopener">Open leaderboard</a>
+        </div>
+      </div>
+    </div>
+
+    <script src="warmaker.js"></script>
+  </body>
+</html>

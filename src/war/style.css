@@ -1,0 +1,181 @@
+:root {
+  --text1: #ffff00;
+  --text2: hsl(60, 70%, 74%);
+
+  --light1: white;
+
+  --red1: hsl(0, 80%, 50%);
+  --red2: hsl(0, 80%, 42%);
+
+  --gold1: ;
+  --gold2: ;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+
+  background-image: url(./assets/misc/flag.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+
+  margin: 0;
+  padding: 0;
+}
+
+.wrapper {
+  max-width: 768px;
+  margin: 0 auto;
+}
+
+#poster {
+  position: fixed;
+  z-index: -1;
+  right: 0;
+  top: 0;
+  transform: rotate(20deg);
+  width: 30%;
+}
+
+h1,
+h2 {
+  text-shadow: 0 0 4px black;
+}
+
+h1 {
+  text-align: center;
+  color: var(--text1);
+}
+
+h2 {
+  text-align: center;
+  color: var(--text2);
+}
+
+button,
+label {
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 4px;
+  transition: all 0.1s ease;
+  text-shadow: 0 0 4px 4px black;
+}
+
+/*-----------------------------------------------------------------------------
+    Image picker
+-----------------------------------------------------------------------------*/
+
+.image-picker {
+  display: block;
+  text-align: center;
+}
+
+#uploadLabel {
+  display: inline-block;
+  background: var(--red1);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+#uploadLabel:hover {
+  background: var(--red2);
+}
+
+#file {
+  opacity: 0;
+  position: absolute;
+  z-index: -1;
+}
+
+/*-----------------------------------------------------------------------------
+    Spinner
+-----------------------------------------------------------------------------*/
+
+.spinner-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+}
+
+.spinner-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 4px solid #ccc;
+  border-top-color: #333;
+  animation: spin 1s infinite linear;
+}
+
+.spinner-text {
+  margin-top: 10px;
+  font-size: 16px;
+  color: white;
+  text-shadow: 0 0 4px black;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/*-----------------------------------------------------------------------------
+    Result
+-----------------------------------------------------------------------------*/
+
+#sectionParsed {
+  margin-top: 20px;
+  text-align: center;
+}
+
+#result-image {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  max-height: 540px;
+  box-shadow: 0 0 4px 0px #000;
+}
+
+#download-button {
+  margin: 1em 0 0;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+
+  color: black;
+  background: hsl(50, 100%, 50%);
+}
+
+#download-button:hover {
+  color: black;
+  background: hsl(50, 100%, 42%);
+}
+
+#leaderboard {
+  margin: 1em 0;
+}
+
+#leaderboard a {
+  color: hsl(50, 100%, 65%);
+  text-shadow: 0 0 1px black;
+  padding: 2px;
+}
+
+#leaderboard a:hover {
+  color: var(--red1);
+  background: hsl(50, 100%, 65%);
+  text-shadow: none;
+}
